@@ -1,1093 +1,298 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FashionHub - Buy & Sell Clothing</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        /* CSS Reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        /* Global Styles */
-        body {
-            background-color: #f8f9fa;
-            color: #333;
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .btn {
-            display: inline-block;
-            background-color: #ff6b6b;
-            color: white;
-            padding: 10px 25px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s;
-            border: 2px solid #ff6b6b;
-            cursor: pointer;
-        }
-
-        .btn:hover {
-            background-color: transparent;
-            color: #ff6b6b;
-        }
-
-        .btn-outline {
-            background-color: transparent;
-            color: #ff6b6b;
-        }
-
-        .btn-outline:hover {
-            background-color: #ff6b6b;
-            color: white;
-        }
-
-        section {
-            padding: 80px 0;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 50px;
-            font-size: 36px;
-            color: #333;
-            position: relative;
-        }
-
-        .section-title:after {
-            content: '';
-            display: block;
-            width: 80px;
-            height: 4px;
-            background-color: #ff6b6b;
-            margin: 15px auto;
-        }
-
-        /* Header Styles */
-        header {
-            background-color: white;
-            position: fixed;
-            width: 100%;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s;
-        }
-
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-        }
-
-        .logo {
-            font-size: 28px;
-            font-weight: 700;
-            color: #333;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-        }
-
-        .logo i {
-            margin-right: 10px;
-            color: #ff6b6b;
-        }
-
-        .search-bar {
-            flex-grow: 1;
-            margin: 0 30px;
-            position: relative;
-        }
-
-        .search-bar input {
-            width: 100%;
-            padding: 12px 20px;
-            border-radius: 30px;
-            border: 1px solid #ddd;
-            font-size: 16px;
-            padding-left: 45px;
-        }
-
-        .search-bar i {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #777;
-        }
-
-        .header-actions {
-            display: flex;
-            align-items: center;
-        }
-
-        .header-actions a {
-            margin-left: 20px;
-            color: #333;
-            text-decoration: none;
-            font-size: 20px;
-            position: relative;
-        }
-
-        .cart-count {
-            position: absolute;
-            top: -10px;
-            right: -10px;
-            background-color: #ff6b6b;
-            color: white;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 12px;
-        }
-
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 24px;
-            color: #333;
-            cursor: pointer;
-            margin-left: 20px;
-        }
-
-        /* Navigation */
-        nav {
-            background-color: #333;
-            padding: 15px 0;
-        }
-
-        .nav-container {
-            display: flex;
-            justify-content: center;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-        }
-
-        .nav-links li {
-            margin: 0 15px;
-        }
-
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-            position: relative;
-        }
-
-        .nav-links a:after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            background-color: #ff6b6b;
-            bottom: -5px;
-            left: 0;
-            transition: width 0.3s;
-        }
-
-        .nav-links a:hover:after {
-            width: 100%;
-        }
-
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
-            background-size: cover;
-            background-position: center;
-            height: 500px;
-            display: flex;
-            align-items: center;
-            text-align: center;
-            color: white;
-            padding-top: 100px;
-        }
-
-        .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .hero h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
-            line-height: 1.2;
-        }
-
-        .hero p {
-            font-size: 20px;
-            margin-bottom: 30px;
-        }
-
-        .hero-btns {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 40px;
-        }
-
-        /* Categories Section */
-        .categories {
-            background-color: white;
-        }
-
-        .categories-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
-        }
-
-        .category-card {
-            background-color: #f8f9fa;
-            border-radius: 10px;
-            overflow: hidden;
-            text-align: center;
-            padding: 30px 20px;
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-
-        .category-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .category-icon {
-            width: 80px;
-            height: 80px;
-            background-color: #ff6b6b;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            color: white;
-            font-size: 30px;
-        }
-
-        .category-card h3 {
-            margin-bottom: 10px;
-            color: #333;
-        }
-
-        .category-card p {
-            color: #777;
-            font-size: 14px;
-        }
-
-        /* Featured Products */
-        .featured-products {
-            background-color: #f8f9fa;
-        }
-
-        .products-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-        }
-
-        .product-card {
-            background-color: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s;
-            position: relative;
-        }
-
-        .product-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .product-badge {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background-color: #ff6b6b;
-            color: white;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        .product-img {
-            height: 250px;
-            overflow: hidden;
-        }
-
-        .product-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s;
-        }
-
-        .product-card:hover .product-img img {
-            transform: scale(1.1);
-        }
-
-        .product-info {
-            padding: 20px;
-        }
-
-        .product-info h3 {
-            font-size: 18px;
-            margin-bottom: 10px;
-            color: #333;
-        }
-
-        .product-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .product-price {
-            font-weight: bold;
-            font-size: 20px;
-            color: #ff6b6b;
-        }
-
-        .product-price .old-price {
-            font-size: 14px;
-            color: #777;
-            text-decoration: line-through;
-            margin-left: 5px;
-        }
-
-        .product-rating {
-            color: #ffc107;
-        }
-
-        .product-actions {
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .wishlist-btn {
-            background: none;
-            border: none;
-            color: #777;
-            font-size: 20px;
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-
-        .wishlist-btn:hover {
-            color: #ff6b6b;
-        }
-
-        /* Seller Section */
-        .sellers {
-            background-color: white;
-        }
-
-        .sellers-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-        }
-
-        .seller-card {
-            background-color: #f8f9fa;
-            border-radius: 10px;
-            padding: 30px;
-            text-align: center;
-            transition: all 0.3s;
-        }
-
-        .seller-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .seller-avatar {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            overflow: hidden;
-            margin: 0 auto 20px;
-            border: 3px solid #ff6b6b;
-        }
-
-        .seller-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .seller-info h3 {
-            margin-bottom: 5px;
-            color: #333;
-        }
-
-        .seller-info p {
-            color: #777;
-            margin-bottom: 15px;
-            font-size: 14px;
-        }
-
-        .seller-stats {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-item h4 {
-            font-size: 20px;
-            color: #ff6b6b;
-            margin-bottom: 5px;
-        }
-
-        .stat-item p {
-            font-size: 12px;
-            color: #777;
-        }
-
-        /* CTA Section */
-        .cta {
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1523381210434-271e8be1f52b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
-            background-size: cover;
-            background-position: center;
-            color: white;
-            text-align: center;
-            padding: 100px 0;
-        }
-
-        .cta h2 {
-            font-size: 36px;
-            margin-bottom: 20px;
-        }
-
-        .cta p {
-            font-size: 18px;
-            margin-bottom: 30px;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* Footer */
-        footer {
-            background-color: #333;
-            color: white;
-            padding: 80px 0 30px;
-        }
-
-        .footer-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 40px;
-            margin-bottom: 50px;
-        }
-
-        .footer-col h3 {
-            font-size: 20px;
-            margin-bottom: 25px;
-            position: relative;
-        }
-
-        .footer-col h3:after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: -10px;
-            width: 50px;
-            height: 2px;
-            background-color: #ff6b6b;
-        }
-
-        .footer-col p {
-            margin-bottom: 20px;
-            color: #bdc3c7;
-        }
-
-        .footer-links {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 15px;
-        }
-
-        .footer-links a {
-            color: #bdc3c7;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .footer-links a:hover {
-            color: white;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 15px;
-        }
-
-        .social-links a {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            color: white;
-            font-size: 18px;
-            transition: all 0.3s;
-        }
-
-        .social-links a:hover {
-            background-color: #ff6b6b;
-        }
-
-        .newsletter-form {
-            display: flex;
-            margin-top: 20px;
-        }
-
-        .newsletter-form input {
-            flex-grow: 1;
-            padding: 12px;
-            border: none;
-            border-radius: 5px 0 0 5px;
-        }
-
-        .newsletter-form button {
-            background-color: #ff6b6b;
-            color: white;
-            border: none;
-            padding: 0 20px;
-            border-radius: 0 5px 5px 0;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .newsletter-form button:hover {
-            background-color: #e05555;
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: #bdc3c7;
-            font-size: 14px;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 992px) {
-            .search-bar {
-                margin: 0 15px;
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        coffee: {
+                            100: '#f5ece5',
+                            200: '#e6d5c3',
+                            300: '#d4b997',
+                            400: '#c49a6b',
+                            500: '#b07d4a',
+                            600: '#8e6439',
+                            700: '#6b4b2a',
+                            800: '#48321c',
+                            900: '#25190e',
+                        }
+                    }
+                }
             }
         }
-
-        @media (max-width: 768px) {
-            .header-container {
-                flex-wrap: wrap;
-            }
-
-            .search-bar {
-                order: 1;
-                flex: 100%;
-                margin: 15px 0 0;
-            }
-
-            .mobile-menu-btn {
-                display: block;
-            }
-
-            nav {
-                position: fixed;
-                top: 90px;
-                left: -100%;
-                width: 100%;
-                height: calc(100vh - 90px);
-                background-color: #333;
-                transition: all 0.5s;
-                padding: 30px 0;
-                overflow-y: auto;
-            }
-
-            nav.active {
-                left: 0;
-            }
-
-            .nav-container {
-                justify-content: flex-start;
-            }
-
-            .nav-links {
-                flex-direction: column;
-                width: 100%;
-                padding: 0 20px;
-            }
-
-            .nav-links li {
-                margin: 15px 0;
-            }
-
-            .hero h1 {
-                font-size: 36px;
-            }
-
-            .hero p {
-                font-size: 18px;
-            }
-
-            .hero-btns {
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .btn {
-                width: 100%;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .section-title {
-                font-size: 28px;
-            }
-
-            .product-actions {
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .product-actions .btn {
-                width: 100%;
-            }
-
-            .cta h2 {
-                font-size: 28px;
-            }
-
-            .cta p {
-                font-size: 16px;
-            }
-        }
-    </style>
+    </script>
 </head>
-<body>
-    <!-- Header -->
-    <header id="header">
-        <div class="container header-container">
-            <a href="#" class="logo"><i class="fas fa-tshirt"></i> FashionHub</a>
-            
-            <div class="search-bar">
-                <i class="fas fa-search"></i>
-                <input type="text" placeholder="Search for clothes, brands, or sellers...">
-            </div>
-            
-            <div class="header-actions">
-                <a href="#"><i class="fas fa-user"></i></a>
-                <a href="#"><i class="fas fa-heart"></i></a>
-                <a href="#"><i class="fas fa-shopping-cart"></i><span class="cart-count">3</span></a>
-                <button class="mobile-menu-btn" id="mobileMenuBtn">
+
+<body class="bg-coffee-100 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-coffee-800 text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center">
+                    <a href="#" class="text-xl font-bold">Brew Haven</a>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="hover:text-coffee-300 transition">Home</a>
+                    <a href="#about" class="hover:text-coffee-300 transition">About</a>
+                    <a href="#menu" class="hover:text-coffee-300 transition">Menu</a>
+                    <a href="#contact" class="hover:text-coffee-300 transition">Contact</a>
+                </div>
+
+                <!-- nav search -->
+                <div class="flex items-center space-x-4">
+                    <button class="p-2 hover:text-coffee-300 transition relative">
+                        <i id="search" class="fas fa-search"></i>
+                        <!-- From Uiverse.io by emmanuelh-dev -->
+                        <div id="search-field" class="hidden items-center justify-center p-5 absolute right-0">
+                            <div class="rounded-lg bg-gray-200 p-5">
+                                <div class="flex">
+                                    <div
+                                        class="flex w-20 items-center justify-center rounded-tl-lg rounded-bl-lg border-r border-gray-200 bg-white p-5">
+                                        <svg viewBox="0 0 20 20" aria-hidden="true"
+                                            class="pointer-events-none absolute w-5 fill-gray-500 transition">
+                                            <path
+                                                d="M16.72 17.78a.75.75 0 1 0 1.06-1.06l-1.06 1.06ZM9 14.5A5.5 5.5 0 0 1 3.5 9H2a7 7 0 0 0 7 7v-1.5ZM3.5 9A5.5 5.5 0 0 1 9 3.5V2a7 7 0 0 0-7 7h1.5ZM9 3.5A5.5 5.5 0 0 1 14.5 9H16a7 7 0 0 0-7-7v1.5Zm3.89 10.45 3.83 3.83 1.06-1.06-3.83-3.83-1.06 1.06ZM14.5 9a5.48 5.48 0 0 1-1.61 3.89l1.06 1.06A6.98 6.98 0 0 0 16 9h-1.5Zm-1.61 3.89A5.48 5.48 0 0 1 9 14.5V16a6.98 6.98 0 0 0 4.95-2.05l-1.06-1.06Z">
+                                            </path>
+                                        </svg>
+                                    </div>
+                                    <input id="search-input" type="text"
+                                        class="w-full max-w-[160px] bg-white pl-2 text-base font-semibold outline-0"
+                                        placeholder="search" >
+                                    <input id="search-btn" type="button" value="Search"
+                                        class="bg-coffee-800 p-2 rounded-tr-lg rounded-br-lg text-white font-semibold hover:bg-coffee-500 transition-colors">
+                                </div>
+                            </div>
+                        </div>
+                    </button>
+                    <button class="p-2 hover:text-coffee-300 transition relative" id="cart-btn">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span
+                            class="absolute -top-1 -right-1 bg-coffee-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center"
+                            id="cart-count">0</span>
+                    </button>
+                </div>
+                <button class="md:hidden p-2" id="mobile-menu-btn">
                     <i class="fas fa-bars"></i>
                 </button>
             </div>
         </div>
-    </header>
-
-    <!-- Navigation -->
-    <nav id="nav">
-        <div class="container nav-container">
-            <ul class="nav-links">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Women</a></li>
-                <li><a href="#">Men</a></li>
-                <li><a href="#">Kids</a></li>
-                <li><a href="#">Accessories</a></li>
-                <li><a href="#">Sellers</a></li>
-                <li><a href="#">Sale</a></li>
-            </ul>
+        <!-- Mobile menu -->
+        <div class="md:hidden hidden bg-coffee-700" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="#home" class="block px-3 py-2 hover:bg-coffee-600 rounded-md">Home</a>
+                <a href="#about" class="block px-3 py-2 hover:bg-coffee-600 rounded-md">About</a>
+                <a href="#menu" class="block px-3 py-2 hover:bg-coffee-600 rounded-md">Menu</a>
+                <a href="#contact" class="block px-3 py-2 hover:bg-coffee-600 rounded-md">Contact</a>
+            </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1>Discover Amazing Fashion Deals</h1>
-                <p>Shop from thousands of independent sellers and find unique clothing items at great prices</p>
-                <div class="hero-btns">
-                    <a href="#" class="btn">Shop Now</a>
-                    <a href="#" class="btn btn-outline">Become a Seller</a>
-                </div>
+    <section id="home"
+        class="relative h-screen flex items-center justify-center bg-coffee-900 text-white overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1445116572660-236099ec97a0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80"
+            alt="Coffee beans" class="absolute w-full h-full object-cover opacity-50">
+        <div class="relative z-10 text-center px-4">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6">Artisan Coffee Crafted with Care</h1>
+            <p class="text-xl mb-8 max-w-2xl mx-auto">Discover the perfect blend of quality beans and expert brewing at
+                Brew Haven</p>
+            <div class="space-x-4">
+                <a href="#menu"
+                    class="bg-coffee-500 text-white px-8 py-3 rounded-full font-bold hover:bg-coffee-600 transition duration-300 inline-block">View
+                    Menu</a>
+                <a href="#contact"
+                    class="bg-transparent border-2 border-white text-white px-8 py-3 rounded-full font-bold hover:bg-white hover:text-coffee-800 transition duration-300 inline-block">Visit
+                    Us</a>
             </div>
         </div>
     </section>
 
-    <!-- Categories Section -->
-    <section class="categories">
-        <div class="container">
-            <h2 class="section-title">Shop by Category</h2>
-            <div class="categories-container">
-                <div class="category-card">
-                    <div class="category-icon">
-                        <i class="fas fa-female"></i>
-                    </div>
-                    <h3>Women's Fashion</h3>
-                    <p>Dresses, tops, jeans and more</p>
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-coffee-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="md:flex items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0 md:pr-10">
+                    <h2 class="text-3xl font-bold text-coffee-800 mb-6">Our Story</h2>
+                    <p class="text-coffee-700 mb-4">Founded in 2010, Brew Haven began as a small passion project between
+                        two coffee enthusiasts who wanted to share their love for specialty coffee with their community.
+                    </p>
+                    <p class="text-coffee-700 mb-4">We source our beans directly from ethical farms around the world,
+                        ensuring fair compensation for farmers and the highest quality for our customers.</p>
+                    <p class="text-coffee-700">Every cup is carefully crafted by our trained baristas who take pride in
+                        their art. We're not just serving coffee - we're creating experiences.</p>
                 </div>
-                <div class="category-card">
-                    <div class="category-icon">
-                        <i class="fas fa-male"></i>
-                    </div>
-                    <h3>Men's Fashion</h3>
-                    <p>Shirts, pants, suits and more</p>
-                </div>
-                <div class="category-card">
-                    <div class="category-icon">
-                        <i class="fas fa-child"></i>
-                    </div>
-                    <h3>Kids & Baby</h3>
-                    <p>Clothing for all ages</p>
-                </div>
-                <div class="category-card">
-                    <div class="category-icon">
-                        <i class="fas fa-tshirt"></i>
-                    </div>
-                    <h3>T-Shirts</h3>
-                    <p>Graphic tees and basics</p>
-                </div>
-                <div class="category-card">
-                    <div class="category-icon">
-                        <i class="fas fa-shoe-prints"></i>
-                    </div>
-                    <h3>Shoes</h3>
-                    <p>Sneakers, boots and more</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Featured Products -->
-    <section class="featured-products">
-        <div class="container">
-            <h2 class="section-title">Featured Products</h2>
-            <div class="products-container">
-                <div class="product-card">
-                    <div class="product-badge">Sale</div>
-                    <div class="product-img">
-                        <img src="https://images.unsplash.com/photo-1542272604-787c3835535d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1226&q=80" alt="Denim Jacket">
-                    </div>
-                    <div class="product-info">
-                        <h3>Women's Denim Jacket</h3>
-                        <div class="product-meta">
-                            <div class="product-price">$49.99 <span class="old-price">$79.99</span></div>
-                            <div class="product-rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                            </div>
-                        </div>
-                        <div class="product-actions">
-                            <button class="wishlist-btn"><i class="far fa-heart"></i></button>
-                            <button class="btn">Add to Cart</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-img">
-                        <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?ixlib=rb-1.2.1&auto=format&fit=crop&w=1226&q=80" alt="Men's Shirt">
-                    </div>
-                    <div class="product-info">
-                        <h3>Men's Casual Shirt</h3>
-                        <div class="product-meta">
-                            <div class="product-price">$34.99</div>
-                            <div class="product-rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="far fa-star"></i>
-                            </div>
-                        </div>
-                        <div class="product-actions">
-                            <button class="wishlist-btn"><i class="far fa-heart"></i></button>
-                            <button class="btn">Add to Cart</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-badge">New</div>
-                    <div class="product-img">
-                        <img src="https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1226&q=80" alt="Women's Dress">
-                    </div>
-                    <div class="product-info">
-                        <h3>Summer Floral Dress</h3>
-                        <div class="product-meta">
-                            <div class="product-price">$59.99</div>
-                            <div class="product-rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                        </div>
-                        <div class="product-actions">
-                            <button class="wishlist-btn"><i class="far fa-heart"></i></button>
-                            <button class="btn">Add to Cart</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-img">
-                        <img src="https://images.unsplash.com/photo-1543076447-215ad9ba6923?ixlib=rb-1.2.1&auto=format&fit=crop&w=1226&q=80" alt="Men's Sneakers">
-                    </div>
-                    <div class="product-info">
-                        <h3>Men's Running Shoes</h3>
-                        <div class="product-meta">
-                            <div class="product-price">$89.99</div>
-                            <div class="product-rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                            </div>
-                        </div>
-                        <div class="product-actions">
-                            <button class="wishlist-btn"><i class="far fa-heart"></i></button>
-                            <button class="btn">Add to Cart</button>
-                        </div>
+                <div class="md:w-1/2">
+                    <div class="grid grid-cols-2 gap-4">
+                        <img src="https://images.unsplash.com/photo-1517705008128-361805f42e86?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80"
+                            alt="Coffee shop interior" class="rounded-lg shadow-lg h-64 w-full object-cover">
+                        <img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80"
+                            alt="Barista making coffee" class="rounded-lg shadow-lg h-64 w-full object-cover">
+                        <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+                            alt="Coffee beans" class="rounded-lg shadow-lg h-64 w-full object-cover">
+                        <img src="https://images.unsplash.com/photo-1498804103079-a6351b050096?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80"
+                            alt="People enjoying coffee" class="rounded-lg shadow-lg h-64 w-full object-cover">
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Top Sellers Section -->
-    <section class="sellers">
-        <div class="container">
-            <h2 class="section-title">Featured Sellers</h2>
-            <div class="sellers-container">
-                <div class="seller-card">
-                    <div class="seller-avatar">
-                        <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Sarah Johnson">
-                    </div>
-                    <div class="seller-info">
-                        <h3>Sarah Johnson</h3>
-                        <p>Boutique Owner</p>
-                        <div class="seller-stats">
-                            <div class="stat-item">
-                                <h4>4.9</h4>
-                                <p>Rating</p>
+    <!-- Menu Section -->
+    <section id="menu" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center text-coffee-800 mb-12">Our Menu</h2>
+
+            <div class="mb-12">
+                <h3 class="text-2xl font-semibold text-coffee-700 mb-6">Coffee Drinks</h3>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="coffee-menu">
+                    <!-- Coffee items will be loaded here via JavaScript -->
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-2xl font-semibold text-coffee-700 mb-6">Food & Pastries</h3>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="food-menu">
+                    <!-- Food items will be loaded here via JavaScript -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-coffee-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center text-coffee-800 mb-12">Visit Us</h2>
+
+            <div class="md:flex">
+                <div class="md:w-1/2 mb-10 md:mb-0 md:pr-10">
+                    <div class="bg-white p-8 rounded-lg shadow-lg">
+                        <h3 class="text-2xl font-semibold text-coffee-700 mb-4">Contact Information</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <i class="fas fa-map-marker-alt text-coffee-500 mt-1 mr-3"></i>
+                                <p>123 Brew Street, Coffeeville, CA 90210</p>
                             </div>
-                            <div class="stat-item">
-                                <h4>1.2k</h4>
-                                <p>Items</p>
+                            <div class="flex items-center">
+                                <i class="fas fa-phone-alt text-coffee-500 mr-3"></i>
+                                <p>(555) 123-4567</p>
                             </div>
-                            <div class="stat-item">
-                                <h4>98%</h4>
-                                <p>Positive</p>
+                            <div class="flex items-center">
+                                <i class="fas fa-envelope text-coffee-500 mr-3"></i>
+                                <p>hello@brewhaven.com</p>
                             </div>
                         </div>
-                        <a href="#" class="btn btn-outline" style="margin-top: 20px;">Visit Shop</a>
+
+                        <h3 class="text-2xl font-semibold text-coffee-700 mt-8 mb-4">Hours</h3>
+                        <div class="space-y-2">
+                            <div class="flex justify-between">
+                                <span>Monday - Friday</span>
+                                <span>6:00 AM - 8:00 PM</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Saturday</span>
+                                <span>7:00 AM - 9:00 PM</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Sunday</span>
+                                <span>7:00 AM - 6:00 PM</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="seller-card">
-                    <div class="seller-avatar">
-                        <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Michael Chen">
-                    </div>
-                    <div class="seller-info">
-                        <h3>Michael Chen</h3>
-                        <p>Streetwear Designer</p>
-                        <div class="seller-stats">
-                            <div class="stat-item">
-                                <h4>4.8</h4>
-                                <p>Rating</p>
-                            </div>
-                            <div class="stat-item">
-                                <h4>850</h4>
-                                <p>Items</p>
-                            </div>
-                            <div class="stat-item">
-                                <h4>97%</h4>
-                                <p>Positive</p>
-                            </div>
-                        </div>
-                        <a href="#" class="btn btn-outline" style="margin-top: 20px;">Visit Shop</a>
-                    </div>
-                </div>
-                <div class="seller-card">
-                    <div class="seller-avatar">
-                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Emma Rodriguez">
-                    </div>
-                    <div class="seller-info">
-                        <h3>Emma Rodriguez</h3>
-                        <p>Vintage Collector</p>
-                        <div class="seller-stats">
-                            <div class="stat-item">
-                                <h4>5.0</h4>
-                                <p>Rating</p>
-                            </div>
-                            <div class="stat-item">
-                                <h4>650</h4>
-                                <p>Items</p>
-                            </div>
-                            <div class="stat-item">
-                                <h4>100%</h4>
-                                <p>Positive</p>
-                            </div>
-                        </div>
-                        <a href="#" class="btn btn-outline" style="margin-top: 20px;">Visit Shop</a>
+
+                <div class="md:w-1/2">
+                    <div class="h-full w-full rounded-lg overflow-hidden">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.215209121995!2d-73.9878449245251!3d40.74844097138992!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259a9b3117469%3A0xd134e199a405a163!2sEmpire%20State%20Building!5e0!3m2!1sen!2sus!4v1687897923902!5m2!1sen!2sus"
+                            width="100%" height="100%" style="border:0; min-height: 400px;" allowfullscreen=""
+                            loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="cta">
-        <div class="container">
-            <h2>Ready to Start Selling?</h2>
-            <p>Join our marketplace of independent sellers and reach thousands of fashion lovers worldwide. Set up your shop in minutes and start selling your clothing items today.</p>
-            <a href="#" class="btn" style="margin-top: 30px;">Become a Seller</a>
+    <!-- Shopping Cart Sidebar -->
+    <div class="fixed inset-y-0 right-0 w-full md:w-96 bg-white shadow-xl transform translate-x-full transition-transform duration-300 z-50 overflow-y-auto"
+        id="cart-sidebar">
+        <div class="p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold text-coffee-800">Your Order</h3>
+                <button id="close-cart" class="text-coffee-500 hover:text-coffee-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="divide-y divide-coffee-200" id="cart-items">
+                <!-- Cart items will be loaded here -->
+                <p class="py-4 text-coffee-500" id="empty-cart-message">Your cart is empty</p>
+            </div>
+            <div class="mt-6 border-t border-coffee-200 pt-6">
+                <div class="flex justify-between mb-2">
+                    <span class="text-coffee-600">Subtotal</span>
+                    <span class="font-bold" id="cart-subtotal">$0.00</span>
+                </div>
+                <div class="flex justify-between mb-2">
+                    <span class="text-coffee-600">Tax (8%)</span>
+                    <span class="font-bold" id="cart-tax">$0.00</span>
+                </div>
+                <div class="flex justify-between text-lg font-bold mt-4">
+                    <span>Total</span>
+                    <span id="cart-total">$0.00</span>
+                </div>
+                <button
+                    class="w-full bg-coffee-600 text-white py-3 rounded-lg mt-6 hover:bg-coffee-700 transition duration-300"
+                    id="checkout-btn">Checkout</button>
+            </div>
         </div>
-    </section>
+    </div>
+    <div class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden" id="cart-overlay"></div>
 
     <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-container">
-                <div class="footer-col">
-                    <h3>FashionHub</h3>
-                    <p>The premier marketplace for buying and selling unique fashion items from independent sellers worldwide.</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-pinterest-p"></i></a>
+    <footer class="bg-coffee-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Brew Haven</h3>
+                    <p class="text-coffee-300">Artisan coffee crafted with care since 2010.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="text-coffee-300 hover:text-white">Home</a></li>
+                        <li><a href="#about" class="text-coffee-300 hover:text-white">About</a></li>
+                        <li><a href="#menu" class="text-coffee-300 hover:text-white">Menu</a></li>
+                        <li><a href="#contact" class="text-coffee-300 hover:text-white">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Follow Us</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-coffee-300 hover:text-white text-xl"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-coffee-300 hover:text-white text-xl"><i
+                                class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-coffee-300 hover:text-white text-xl"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-coffee-300 hover:text-white text-xl"><i class="fab fa-tiktok"></i></a>
                     </div>
                 </div>
-                <div class="footer-col">
-                    <h3>Shop</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Women's Fashion</a></li>
-                        <li><a href="#">Men's Fashion</a></li>
-                        <li><a href="#">Kids & Baby</a></li>
-                        <li><a href="#">Accessories</a></li>
-                        <li><a href="#">Sale Items</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h3>Sell</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Start Selling</a></li>
-                        <li><a href="#">Seller Handbook</a></li>
-                        <li><a href="#">Fees & Payments</a></li>
-                        <li><a href="#">Seller Dashboard</a></li>
-                        <li><a href="#">Seller Community</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h3>About</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Our Story</a></li>
-                        <li><a href="#">Careers</a></li>
-                        <li><a href="#">Press Center</a></li>
-                        <li><a href="#">Sustainability</a></li>
-                        <li><a href="#">Impact Report</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h3>Newsletter</h3>
-                    <p>Subscribe to get updates on new arrivals, special offers and other discount information.</p>
-                    <form class="newsletter-form">
-                        <input type="email" placeholder="Your Email">
-                        <button type="submit"><i class="fas fa-paper-plane"></i></button>
-                    </form>
+                <div>
+                    <h4 class="font-bold mb-4">Newsletter</h4>
+                    <p class="text-coffee-300 mb-2">Subscribe for updates and special offers</p>
+                    <div class="flex">
+                        <input type="email" placeholder="Your email"
+                            class="px-4 py-2 rounded-l-lg w-full text-coffee-800">
+                        <button
+                            class="bg-coffee-600 px-4 py-2 rounded-r-lg hover:bg-coffee-700 transition">Subscribe</button>
+                    </div>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2023 FashionHub. All Rights Reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+            <div class="border-t border-coffee-700 mt-8 pt-8 text-center text-coffee-300">
+                <p>&copy; 2023 Brew Haven. All rights reserved.</p>
+
             </div>
         </div>
     </footer>
 
-    <script>
-        // Mobile Menu Toggle
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const nav = document.getElementById('nav');
-
-        mobileMenuBtn.addEventListener('click', () => {
-            nav.classList.toggle('active');
-            mobileMenuBtn.innerHTML = nav.classList.contains('active') ? 
-                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
-        });
-
-        // Close mobile menu when clicking on a link
-        const navLinks = document.querySelectorAll('nav ul li a');
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                nav.classList.remove('active');
-                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
-            });
-        });
-
-        // Header scroll effect
-        const header = document.getElementById('header');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 100) {
-                header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.2)';
-            } else {
-                header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
-            }
-        });
-
-        // Wishlist button toggle
-        const wishlistBtns = document.querySelectorAll('.wishlist-btn');
-        wishlistBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const icon = btn.querySelector('i');
-                if (icon.classList.contains('far')) {
-                    icon.classList.remove('far');
-                    icon.classList.add('fas');
-                    icon.style.color = '#ff6b6b';
-                } else {
-                    icon.classList.remove('fas');
-                    icon.classList.add('far');
-                    icon.style.color = '#777';
-                }
-            });
-        });
-    </script>
+    <script src="app.js"></script>
 </body>
-</html>
